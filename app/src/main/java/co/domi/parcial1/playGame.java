@@ -14,7 +14,7 @@ public class playGame extends AppCompatActivity {
 
     Button upButton,leftButton,rightButton,downButton,changeColorButton;
     TCPclient tcp;
-    int x,y;
+    int x,y,colorRthis,colorGthis,colorBthis;
     String user,detalles;
 
     @Override
@@ -34,16 +34,22 @@ public class playGame extends AppCompatActivity {
         int b = getIntent().getExtras().getInt("b");
         int c = getIntent().getExtras().getInt("c");
         String d = getIntent().getExtras().getString("d");
+        int r = getIntent().getExtras().getInt("r");
+        int g = getIntent().getExtras().getInt("g");
+        int colorb = getIntent().getExtras().getInt("colorb");
         user = a;
         x = b;
         y = c;
         detalles = d;
+        colorRthis = r;
+        colorGthis = g;
+        colorBthis = colorb;
 
         downButton.setOnClickListener(
                 (v) -> {
                     Gson gson = new Gson();
                     y = y + 50;
-                    Jugador obj = new Jugador(user,x,y,detalles);
+                    Jugador obj = new Jugador(user,x,y,detalles,colorRthis,colorGthis,colorBthis);
                     String json = gson.toJson(obj);
                     tcp.Message(json);
                 }
@@ -52,7 +58,7 @@ public class playGame extends AppCompatActivity {
                 (v) -> {
                     Gson gson = new Gson();
                     x = x + 50;
-                    Jugador obj = new Jugador(user,x,y,detalles);
+                    Jugador obj = new Jugador(user,x,y,detalles,colorRthis,colorGthis,colorBthis);
                     String json = gson.toJson(obj);
                     tcp.Message(json);
                 }
@@ -61,7 +67,7 @@ public class playGame extends AppCompatActivity {
                 (v) -> {
                     Gson gson = new Gson();
                     x = x - 50;
-                    Jugador obj = new Jugador(user,x,y,detalles);
+                    Jugador obj = new Jugador(user,x,y,detalles,colorRthis,colorGthis,colorBthis);
                     String json = gson.toJson(obj);
                     tcp.Message(json);
                 }
@@ -70,11 +76,25 @@ public class playGame extends AppCompatActivity {
                 (v) -> {
                     Gson gson = new Gson();
                     y = y - 50;
-                    Jugador obj = new Jugador(user,x,y,detalles);
+                    Jugador obj = new Jugador(user,x,y,detalles,colorRthis,colorGthis,colorBthis);
                     String json = gson.toJson(obj);
                     tcp.Message(json);
                 }
         );
+
+        changeColorButton.setOnClickListener(
+                (v) -> {
+                    Gson gson = new Gson();
+                    colorRthis = 255;
+                    colorGthis = 0;
+                    colorBthis = 0;
+                    Jugador obj = new Jugador(user,x,y,detalles,colorRthis,colorGthis,colorBthis);
+                    String json = gson.toJson(obj);
+                    tcp.Message(json);
+                }
+        );
+
+
 
     }
 }
